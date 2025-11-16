@@ -337,6 +337,60 @@
           opacity: 0.95;
         }
       }
+
+      /* Audio control styles */
+      .audio-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+      .audio-btn.hidden {
+        display: none;
+      }
+
+      /* Audio overlay when autoplay blocked */
+      .audio-overlay {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.95);
+        color: #333;
+        padding: 14px 18px;
+        border-radius: 12px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+        z-index: 2000;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .audio-overlay.hidden {
+        display: none;
+      }
+
+      @media (max-width: 480px) {
+        .audio-btn {
+          top: 12px;
+          right: 12px;
+          width: 40px;
+          height: 40px;
+          font-size: 18px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -368,6 +422,36 @@
           </div>
         </div>
       </div>
+
+      <!-- Audio control button (visible when needed) -->
+      <button
+        id="audioBtn"
+        class="audio-btn"
+        aria-pressed="false"
+        aria-label="Play background music"
+      >
+        🔈
+      </button>
+    </div>
+
+    <!-- Background audio (put your file inside d:\Orther\web clone\MilkyWay\assets\) -->
+    <audio
+      id="bgAudio"
+      src="assets/Anh Sai Rồi.mp3"
+      loop
+      preload="auto"
+      autoplay
+      playsinline
+    ></audio>
+
+    <!-- Overlay prompt when autoplay blocked -->
+    <div
+      id="audioOverlay"
+      class="audio-overlay hidden"
+      role="button"
+      aria-hidden="true"
+    >
+      🔊 Chạm để bật nhạc
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -523,6 +607,133 @@
           document.getElementById("popup").classList.remove("show");
         }, 3000);
       }
+
+      // --- Audio control: play/pause with autoplay attempt & fallback ---
+      (function () {
+        const audio = document.getElementById("bgAudio");
+        const btn = document.getElementById("audioBtn");
+        const overlay = document.getElementById("audioOverlay");
+
+        const prefersReduced =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function setBtnPlaying(playing) {
+          btn.setAttribute("aria-pressed", playing ? "true" : "false");
+          btn.textContent = playing ? "⏸️" : "🔈";
+        }
+
+        async function tryAutoPlay() {
+          if (prefersReduced) {
+            btn.classList.remove("hidden");
+            overlay.classList.add("hidden");
+            setBtnPlaying(false);
+            return;
+          }
+
+          // First try: direct unmuted autoplay
+          try {
+            await audio.play();
+            audio.muted = false;
+            setBtnPlaying(true);
+            btn.classList.remove("hidden");
+            overlay.classList.add("hidden");
+            return;
+          } catch (err) {
+            // If blocked, try muted autoplay (some browsers allow muted autoplay)
+            try {
+              audio.muted = true;
+              await audio.play();
+              setBtnPlaying(true);
+              btn.classList.remove("hidden");
+              // show overlay to prompt user to unmute (so audible sound can start)
+              overlay.classList.remove("hidden");
+
+              // Once user interacts (click/touch), unmute and try to play audible
+              const unlock = async () => {
+                try {
+                  audio.muted = false;
+                  await audio.play();
+                  setBtnPlaying(true);
+                  overlay.classList.add("hidden");
+                } catch (e) {
+                  // still blocked: keep overlay visible and let user press it
+                }
+                document.removeEventListener("click", unlock);
+                document.removeEventListener("touchstart", unlock);
+              };
+              document.addEventListener("click", unlock, { once: true });
+              document.addEventListener("touchstart", unlock, { once: true });
+              return;
+            } catch (e2) {
+              // Completely blocked: show controls for manual start
+              audio.muted = true;
+              btn.classList.remove("hidden");
+              overlay.classList.remove("hidden");
+              setBtnPlaying(false);
+            }
+          }
+        }
+
+        // Toggle on user action
+        function toggleAudio() {
+          if (audio.paused) {
+            audio
+              .play()
+              .then(() => {
+                setBtnPlaying(true);
+                overlay.classList.add("hidden");
+              })
+              .catch(() => {
+                // if blocked, show overlay
+                overlay.classList.remove("hidden");
+                setBtnPlaying(false);
+              });
+          } else {
+            audio.pause();
+            setBtnPlaying(false);
+          }
+        }
+
+        // Overlay click should attempt to unmute and play
+        overlay.addEventListener(
+          "click",
+          async () => {
+            try {
+              audio.muted = false;
+              await audio.play();
+              setBtnPlaying(true);
+              overlay.classList.add("hidden");
+            } catch {
+              // if still blocked, keep overlay visible
+            }
+          },
+          { passive: true }
+        );
+
+        // Initialize: hide button until needed
+        btn.classList.add("hidden");
+        overlay.classList.add("hidden");
+
+        // Try autoplay after load
+        window.addEventListener("load", () => {
+          setTimeout(tryAutoPlay, 100);
+        });
+
+        // User gesture toggles playback
+        btn.addEventListener("click", toggleAudio, { passive: true });
+        btn.addEventListener(
+          "touchstart",
+          (e) => {
+            e.preventDefault();
+            toggleAudio();
+          },
+          { passive: false }
+        );
+
+        audio.addEventListener("pause", () => setBtnPlaying(false));
+        audio.addEventListener("play", () => setBtnPlaying(true));
+      })();
 
       // Auto cycle messages
       setInterval(() => {
