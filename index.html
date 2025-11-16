@@ -1,161 +1,428 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Popup Love Message</title>
+    <title>Em Xin Lỗi Anh/Em Nhé ❤️</title>
     <style>
-      body {
+      * {
         margin: 0;
-        background-color: black;
-        overflow: hidden;
-      }
-
-      .popup {
-        position: absolute;
-        padding: 10px 20px;
-        background-color: #f8c7da;
-        font-family: "Comic Sans MS", cursive, sans-serif;
-        font-weight: bold;
-        font-size: 18px;
-        color: white;
-        border-radius: 8px;
-        box-shadow: 0 0 10px pink;
-        animation: fadeOut 10s ease forwards;
-      }
-
-      @keyframes fadeOut {
-        0% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        100% {
-          opacity: 0;
-          transform: scale(0.5);
-        }
-      }
-
-      .dialog {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #f8c7da;
-        padding: 20px;
-        border-radius: 10px;
-        font-family: "Comic Sans MS", cursive, sans-serif;
-        font-size: 24px;
-        color: white;
-        text-align: center;
-        box-shadow: 0 0 15px pink;
-        z-index: 1000;
-        max-width: 80%;
+        padding: 0;
         box-sizing: border-box;
       }
 
-      /* Media Queries cho màn hình nhỏ */
-      @media screen and (max-width: 600px) {
-        .popup {
-          padding: 8px 12px;
-          font-size: 14px;
-          max-width: 150px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+      }
 
-        .dialog {
-          padding: 15px;
-          font-size: 18px;
-          max-width: 90%;
+      .heart {
+        position: absolute;
+        width: var(--heart-size, 20px);
+        height: var(--heart-size, 20px);
+        background: #ff69b4;
+        transform: rotate(45deg);
+        animation: float 6s infinite;
+        opacity: 0;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: var(--heart-size, 20px);
+        height: var(--heart-size, 20px);
+        background: #ff69b4;
+        border-radius: 50%;
+      }
+
+      .heart::before {
+        top: calc(-1 * (var(--heart-size, 20px) / 2));
+        left: 0;
+      }
+
+      .heart::after {
+        top: 0;
+        left: calc(-1 * (var(--heart-size, 20px) / 2));
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(45deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(45deg);
+          opacity: 0;
         }
       }
 
-      @media screen and (max-width: 400px) {
-        .popup {
-          padding: 6px 10px;
-          font-size: 12px;
-          max-width: 120px;
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 50px;
+        border-radius: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 600px;
+        animation: slideIn 1s ease-out;
+        position: relative;
+        z-index: 10;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .teddy {
+        font-size: 100px;
+        animation: shake 2s infinite;
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(-10deg);
+        }
+        75% {
+          transform: rotate(10deg);
+        }
+      }
+
+      h1 {
+        color: #e91e63;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .message {
+        color: #555;
+        font-size: 1.2em;
+        line-height: 1.8;
+        margin-bottom: 30px;
+      }
+
+      .btn-container {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      button {
+        padding: 15px 40px;
+        font-size: 1.1em;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .yes-btn {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+      }
+
+      .yes-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+      }
+
+      .no-btn {
+        background: #ddd;
+        color: #666;
+        position: relative;
+      }
+
+      .no-btn:hover {
+        background: #ccc;
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .popup-content {
+        background: white;
+        padding: 50px;
+        border-radius: 30px;
+        text-align: center;
+        animation: popIn 0.5s ease-out;
+        max-width: 90%;
+      }
+
+      @keyframes popIn {
+        from {
+          transform: scale(0);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .celebration {
+        font-size: 80px;
+        margin-bottom: 20px;
+      }
+
+      .popup h2 {
+        color: #e91e63;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+
+      .sparkle {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: #ffd700;
+        border-radius: 50%;
+        animation: sparkle 1s infinite;
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Mobile / small screens */
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+          border-radius: 18px;
+          max-width: calc(100% - 32px);
+          margin: 16px;
         }
 
-        .dialog {
-          padding: 10px;
-          font-size: 16px;
+        .teddy {
+          font-size: 64px;
+          margin-bottom: 12px;
+        }
+
+        h1 {
+          font-size: 1.6em;
+        }
+
+        .message {
+          font-size: 1em;
+          line-height: 1.5;
+        }
+
+        button {
+          padding: 12px 20px;
+          font-size: 1em;
+        }
+
+        .celebration {
+          font-size: 48px;
+        }
+
+        .popup-content {
+          padding: 20px;
+        }
+
+        /* Smaller hearts on mobile */
+        .heart {
+          --heart-size: 12px;
+          animation-duration: 5s;
+        }
+
+        .heart::before,
+        .heart::after {
+          /* inherit --heart-size */
         }
       }
     </style>
   </head>
   <body>
-    <div id="startDialog" class="dialog">Click vào màn hình nhaaa!</div>
+    <div class="container">
+      <div class="teddy">🧸</div>
+      <h1>Anh Xin Lỗi Em Nhé! 💔</h1>
+      <div class="message">
+        <p>Anh biết anh đã làm em buồn... 😢</p>
+        <p>Anh thật sự rất hối hận và muốn xin lỗi em!</p>
+        <p>Em có thể tha thứ cho anh không? 🥺</p>
+      </div>
+      <div class="btn-container">
+        <button class="yes-btn" onclick="forgive()">❤️ Tha thứ cho anh</button>
+        <button
+          class="no-btn"
+          onmouseover="moveButton(event)"
+          onclick="showSad()"
+        >
+          😠 Không tha thứ
+        </button>
+      </div>
+    </div>
 
-    <audio id="backgroundMusic" src="assets/music.mp3" loop></audio>
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <div class="celebration">🎉💖🎊</div>
+        <h2>Yayyy! Anh yêu em nhất! 💕</h2>
+        <p style="font-size: 1.2em; color: #666">
+          Cảm ơn em đã tha thứ cho anh! ❤️
+        </p>
+        <p style="font-size: 1.1em; color: #666; margin-top: 15px">
+          Anh hứa sẽ không làm em buồn nữa! 🥰
+        </p>
+        <button class="yes-btn" onclick="closePopup()" style="margin-top: 30px">
+          Đóng ❤️
+        </button>
+      </div>
+    </div>
 
     <script>
-      const messages = ["I Miss You !"];
-      const colors = ["white"];
-      const dialog = document.getElementById("startDialog");
-      const audio = document.getElementById("backgroundMusic");
+      // Tạo trái tim bay
+      let heartCount = 0;
+      const MAX_HEARTS = 60;
 
-      function createPopup() {
-        const popup = document.createElement("div");
-        popup.className = "popup";
-        popup.textContent =
-          messages[Math.floor(Math.random() * messages.length)];
-        popup.style.color = colors[Math.floor(Math.random() * colors.length)];
+      function createHeart() {
+        if (heartCount >= MAX_HEARTS) return;
+        heartCount++;
 
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
+        const heart = document.createElement("div");
+        heart.className = "heart";
 
-        // Điều chỉnh giới hạn vị trí để pop-up không tràn ra ngoài
-        const maxWidth = screenWidth - 150; // Giảm kích thước tối đa của pop-up
-        const maxHeight = screenHeight - 50;
-        const x = Math.floor(Math.random() * (maxWidth < 0 ? 0 : maxWidth));
-        const y = Math.floor(Math.random() * (maxHeight < 0 ? 0 : maxHeight));
+        // Kích thước trái tim tùy theo màn hình (dùng CSS variable)
+        const size = window.innerWidth < 600 ? 12 : 20;
+        heart.style.setProperty("--heart-size", size + "px");
 
-        popup.style.left = `${x}px`;
-        popup.style.top = `${y}px`;
-
-        document.body.appendChild(popup);
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration =
+          Math.random() * 3 + (window.innerWidth < 600 ? 3 : 3) + "s";
+        heart.style.animationDelay = Math.random() * 5 + "s";
+        document.body.appendChild(heart);
 
         setTimeout(() => {
-          popup.remove();
-        }, 25000);
+          heart.remove();
+          heartCount--;
+        }, 8000);
       }
 
-      function startPopups(count) {
-        let created = 0;
-        const interval = setInterval(() => {
-          if (created >= count) {
-            clearInterval(interval);
-            return;
-          }
-          createPopup();
-          created++;
-        }, 30);
+      // Thay đổi tần suất tạo trái tim dựa trên kích thước màn hình
+      let heartIntervalId;
+      function startHearts() {
+        const interval = window.innerWidth < 600 ? 600 : 300;
+        if (heartIntervalId) clearInterval(heartIntervalId);
+        heartIntervalId = setInterval(createHeart, interval);
+      }
+      startHearts();
+      window.addEventListener("resize", () => {
+        startHearts();
+      });
+
+      // Làm nút "Không tha thứ" chạy trốn (hỗ trợ cả touch)
+      function moveButton(e) {
+        // hỗ trợ touch event
+        const evt = e.touches ? e.touches[0] : e;
+        const btn = e.currentTarget || e.target;
+
+        const btnWidth = btn.offsetWidth || 120;
+        const btnHeight = btn.offsetHeight || 48;
+        const padding = 16;
+
+        const maxX = Math.max(window.innerWidth - btnWidth - padding, padding);
+        const maxY = Math.max(
+          window.innerHeight - btnHeight - padding,
+          padding
+        );
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        btn.style.position = "fixed";
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
       }
 
-      function enterFullscreen() {
-        const elem = document.documentElement;
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.mozRequestFullScreen) {
-          elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen();
+      // Gắn sự kiện touchstart cho mobile (an toàn nếu nút chưa tồn tại)
+      document.addEventListener("DOMContentLoaded", () => {
+        const noBtn = document.querySelector(".no-btn");
+        if (noBtn) {
+          // đảm bảo cả hover (desktop) và touch (mobile) làm việc
+          noBtn.addEventListener("touchstart", moveButton, { passive: true });
+          // dùng mouseenter thay vì onmouseover để ổn định trên desktop
+          noBtn.addEventListener("mouseenter", moveButton);
+        }
+      });
+
+      // Hiển thị popup khi tha thứ
+      function forgive() {
+        const popup = document.getElementById("popup");
+        popup.style.display = "flex";
+        createSparkles();
+      }
+
+      // Đóng popup
+      function closePopup() {
+        const popup = document.getElementById("popup");
+        popup.style.display = "none";
+      }
+
+      // Tạo hiệu ứng lấp lánh
+      function createSparkles() {
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+            sparkle.style.left = Math.random() * window.innerWidth + "px";
+            sparkle.style.top = Math.random() * window.innerHeight + "px";
+            sparkle.style.animationDelay = Math.random() + "s";
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 1000);
+          }, i * 50);
         }
       }
 
-      document.addEventListener("click", function startExperience() {
-        dialog.style.display = "none";
-        audio.play().catch((error) => {
-          console.log("Lỗi phát nhạc:", error);
-        });
-        enterFullscreen();
-        startPopups(200);
-        document.removeEventListener("click", startExperience);
-      });
+      // Hiển thị thông báo buồn
+      function showSad() {
+        alert("Hức hức... Anh buồn quá! 😭💔");
+      }
     </script>
   </body>
 </html>
