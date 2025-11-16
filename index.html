@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Em Xin Lỗi Anh/Em Nhé ❤️</title>
+    <title>Xin Lỗi Em Yêu 💕</title>
     <style>
       * {
         margin: 0;
@@ -15,46 +15,22 @@
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
+        overflow-x: hidden;
         position: relative;
       }
 
+      /* Hearts background animation */
       .heart {
-        position: absolute;
-        width: var(--heart-size, 20px);
-        height: var(--heart-size, 20px);
-        background: #ff69b4;
-        transform: rotate(45deg);
-        animation: float 6s infinite;
+        position: fixed;
+        font-size: 30px;
+        animation: float 10s infinite ease-in-out;
         opacity: 0;
-      }
-
-      .heart::before,
-      .heart::after {
-        content: "";
-        position: absolute;
-        width: var(--heart-size, 20px);
-        height: var(--heart-size, 20px);
-        background: #ff69b4;
-        border-radius: 50%;
-      }
-
-      .heart::before {
-        top: calc(-1 * (var(--heart-size, 20px) / 2));
-        left: 0;
-      }
-
-      .heart::after {
-        top: 0;
-        left: calc(-1 * (var(--heart-size, 20px) / 2));
+        pointer-events: none;
       }
 
       @keyframes float {
         0% {
-          transform: translateY(100vh) rotate(45deg);
+          transform: translateY(100vh) rotate(0deg);
           opacity: 0;
         }
         10% {
@@ -64,365 +40,494 @@
           opacity: 1;
         }
         100% {
-          transform: translateY(-100vh) rotate(45deg);
+          transform: translateY(-100vh) rotate(360deg);
           opacity: 0;
         }
       }
 
       .container {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 50px;
-        border-radius: 30px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
         text-align: center;
-        max-width: 600px;
-        animation: slideIn 1s ease-out;
         position: relative;
-        z-index: 10;
+        z-index: 1;
       }
 
-      @keyframes slideIn {
-        from {
-          transform: translateY(-50px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      .teddy {
-        font-size: 100px;
-        animation: shake 2s infinite;
-        display: inline-block;
+      .main-title {
+        font-size: 48px;
+        color: white;
         margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        animation: bounce 2s infinite;
       }
 
-      @keyframes shake {
+      @keyframes bounce {
         0%,
         100% {
-          transform: rotate(0deg);
+          transform: translateY(0);
         }
-        25% {
-          transform: rotate(-10deg);
-        }
-        75% {
-          transform: rotate(10deg);
+        50% {
+          transform: translateY(-10px);
         }
       }
 
-      h1 {
-        color: #e91e63;
-        font-size: 2.5em;
-        margin-bottom: 20px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      .subtitle {
+        font-size: 24px;
+        color: #ffe0f0;
+        margin-bottom: 40px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
       }
 
-      .message {
-        color: #555;
-        font-size: 1.2em;
-        line-height: 1.8;
+      .message-box {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         margin-bottom: 30px;
+        backdrop-filter: blur(10px);
       }
 
-      .btn-container {
+      .sorry-message {
+        font-size: 20px;
+        color: #333;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        min-height: 100px;
         display: flex;
-        gap: 15px;
+        align-items: center;
         justify-content: center;
-        margin-top: 30px;
+        animation: fadeIn 1s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .emoji {
+        font-size: 60px;
+        margin: 20px 0;
+        animation: spin 3s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        0%,
+        100% {
+          transform: rotate(-10deg) scale(1);
+        }
+        50% {
+          transform: rotate(10deg) scale(1.1);
+        }
+      }
+
+      .button-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
       }
 
       button {
         padding: 15px 40px;
-        font-size: 1.1em;
+        font-size: 18px;
         border: none;
         border-radius: 50px;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: all 0.3s ease;
         font-weight: bold;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       }
 
-      .yes-btn {
+      .btn-next {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         color: white;
       }
 
-      .yes-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+      .btn-next:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
       }
 
-      .no-btn {
-        background: #ddd;
-        color: #666;
-        position: relative;
+      .btn-forgive {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
       }
 
-      .no-btn:hover {
-        background: #ccc;
+      .btn-forgive:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+      }
+
+      .love-meter {
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      .meter-label {
+        font-size: 18px;
+        color: white;
+        margin-bottom: 10px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      .meter-bar {
+        width: 100%;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .meter-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ff6b6b, #ff8787, #ffa5a5);
+        border-radius: 15px;
+        transition: width 0.5s ease;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 10px;
+        color: white;
+        font-weight: bold;
       }
 
       .popup {
-        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+        text-align: center;
+      }
+
+      .popup.show {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .popup h2 {
+        color: #f5576c;
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+
+      .popup p {
+        color: #333;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 100;
-        justify-content: center;
-        align-items: center;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
       }
 
-      .popup-content {
-        background: white;
-        padding: 50px;
-        border-radius: 30px;
-        text-align: center;
-        animation: popIn 0.5s ease-out;
-        max-width: 90%;
+      .overlay.show {
+        opacity: 1;
+        pointer-events: all;
       }
 
-      @keyframes popIn {
-        from {
-          transform: scale(0);
-          opacity: 0;
-        }
-        to {
-          transform: scale(1);
-          opacity: 1;
+      /* Reduce motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
         }
       }
 
-      .celebration {
-        font-size: 80px;
-        margin-bottom: 20px;
-      }
-
-      .popup h2 {
-        color: #e91e63;
-        font-size: 2em;
-        margin-bottom: 20px;
-      }
-
-      .sparkle {
-        position: absolute;
-        width: 5px;
-        height: 5px;
-        background: #ffd700;
-        border-radius: 50%;
-        animation: sparkle 1s infinite;
-      }
-
-      @keyframes sparkle {
-        0%,
-        100% {
-          opacity: 0;
-          transform: scale(0);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      /* Mobile / small screens */
-      @media (max-width: 600px) {
+      /* Responsive adjustments */
+      @media (max-width: 800px) {
         .container {
+          padding: 30px 16px;
+        }
+        .main-title {
+          font-size: 36px;
+        }
+        .subtitle {
+          font-size: 20px;
+        }
+        .message-box {
           padding: 24px;
-          border-radius: 18px;
-          max-width: calc(100% - 32px);
-          margin: 16px;
         }
-
-        .teddy {
-          font-size: 64px;
-          margin-bottom: 12px;
+        .sorry-message {
+          font-size: 18px;
+          min-height: 80px;
         }
-
-        h1 {
-          font-size: 1.6em;
-        }
-
-        .message {
-          font-size: 1em;
-          line-height: 1.5;
-        }
-
-        button {
-          padding: 12px 20px;
-          font-size: 1em;
-        }
-
-        .celebration {
+        .emoji {
           font-size: 48px;
         }
+        button {
+          padding: 12px 28px;
+          font-size: 16px;
+        }
+        .meter-bar {
+          height: 24px;
+        }
+        .popup {
+          padding: 28px;
+          width: 90%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(0);
+        }
+      }
 
-        .popup-content {
-          padding: 20px;
+      @media (max-width: 480px) {
+        body {
+          background-position: center;
+        }
+        .container {
+          max-width: 100%;
+          padding: 20px 12px;
+        }
+        .main-title {
+          font-size: 28px;
+        }
+        .subtitle {
+          font-size: 16px;
+        }
+        .message-box {
+          padding: 18px;
+          border-radius: 14px;
+        }
+        .sorry-message {
+          font-size: 15px;
+          min-height: 60px;
+        }
+        .emoji {
+          font-size: 40px;
+        }
+        .button-container {
+          gap: 12px;
+        }
+        button {
+          padding: 10px 18px;
+          font-size: 15px;
+        }
+        .meter-label {
+          font-size: 14px;
+        }
+        .meter-bar {
+          height: 20px;
         }
 
-        /* Smaller hearts on mobile */
+        /* smaller & fewer hearts on small screens */
         .heart {
-          --heart-size: 12px;
-          animation-duration: 5s;
-        }
-
-        .heart::before,
-        .heart::after {
-          /* inherit --heart-size */
+          font-size: 18px;
+          animation-duration: 8s !important;
+          opacity: 0.95;
         }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="teddy">🧸</div>
-      <h1>Anh Xin Lỗi Em Nhé! 💔</h1>
-      <div class="message">
-        <p>Anh biết anh đã làm em buồn... 😢</p>
-        <p>Anh thật sự rất hối hận và muốn xin lỗi em!</p>
-        <p>Em có thể tha thứ cho anh không? 🥺</p>
+      <h1 class="main-title">Em Ơi, Anh Xin Lỗi! 😭💕</h1>
+      <p class="subtitle">Anh biết anh sai rồi...</p>
+
+      <div class="message-box">
+        <div class="emoji">🥺</div>
+        <div class="sorry-message" id="sorryMessage">
+          Em yêu ơi, anh thật sự xin lỗi em vì những gì đã làm em buồn...
+        </div>
       </div>
-      <div class="btn-container">
-        <button class="yes-btn" onclick="forgive()">❤️ Tha thứ cho anh</button>
-        <button
-          class="no-btn"
-          onmouseover="moveButton(event)"
-          onclick="showSad()"
-        >
-          😠 Không tha thứ
+
+      <div class="button-container">
+        <button class="btn-next" onclick="nextMessage()">Tiếp Theo 💌</button>
+        <button class="btn-forgive" onclick="forgive()">
+          Em Tha Thứ Rồi 💖
         </button>
+      </div>
+
+      <div class="love-meter">
+        <div class="meter-label">
+          Mức Độ Tha Thứ Của Em: <span id="meterPercent">0%</span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-fill" id="meterFill" style="width: 0%">
+            <span>❤️</span>
+          </div>
+        </div>
       </div>
     </div>
 
+    <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
-      <div class="popup-content">
-        <div class="celebration">🎉💖🎊</div>
-        <h2>Yayyy! Anh yêu em nhất! 💕</h2>
-        <p style="font-size: 1.2em; color: #666">
-          Cảm ơn em đã tha thứ cho anh! ❤️
-        </p>
-        <p style="font-size: 1.1em; color: #666; margin-top: 15px">
-          Anh hứa sẽ không làm em buồn nữa! 🥰
-        </p>
-        <button class="yes-btn" onclick="closePopup()" style="margin-top: 30px">
-          Đóng ❤️
-        </button>
-      </div>
+      <h2>Yêu Em Nhiều Lắm! 💕💕💕</h2>
+      <p>
+        Cảm ơn em đã tha thứ cho anh! Anh hứa sẽ yêu thương em hơn mỗi ngày! 🥰
+      </p>
     </div>
 
     <script>
-      // Tạo trái tim bay
+      const sorryMessages = [
+        "Em yêu ơi, anh thật sự xin lỗi em vì những gì đã làm em buồn...",
+        "Anh biết anh đã sai, anh hứa sẽ không để em buồn nữa đâu! 🥺",
+        "Em là người anh yêu nhất, anh không muốn mất em đâu... 💔",
+        "Anh xin lỗi vì đã không lắng nghe em nhiều hơn! 😢",
+        "Mỗi giây phút em buồn, anh cũng đau lòng lắm em à! 💔",
+        "Anh hứa sẽ cố gắng nhiều hơn, để em luôn vui vẻ bên anh! 🌸",
+        "Em có biết không, khi em buồn, thế giới của anh cũng u ám theo... 🌧️",
+        "Anh xin lỗi vì đã không đủ tốt, anh sẽ cố gắng hơn nữa! 💪",
+        "Em là niềm vui của anh, đừng để anh mất em nhé! 🌟",
+        "Anh yêu em nhiều lắm, xin em hãy tha thứ cho anh! ❤️",
+        "Nếu thời gian quay lại được, anh sẽ không làm em buồn nữa! ⏰",
+        "Em là điều tuyệt vời nhất trong đời anh, anh xin lỗi em! 🌈",
+        "Anh hứa sẽ yêu thương em nhiều hơn mỗi ngày! 💝",
+        "Không có em, cuộc sống anh vô nghĩa lắm em à! 🥀",
+        "Anh xin lỗi vì đã làm em phải rơi nước mắt... 😭",
+        "Em cười đi, anh thích nhìn em cười lắm! 😊",
+        "Anh sẽ làm mọi thứ để em hạnh phúc, tin anh đi em! 🌻",
+        "Em là thiên thần của anh, xin đừng giận anh nữa nhé! 👼",
+        "Anh biết anh ngu, nhưng anh yêu em là thật! 💕",
+        "Cho anh một cơ hội để chứng minh tình yêu của anh nhé! 🎁",
+      ];
+
+      const emojis = [
+        "🥺",
+        "😭",
+        "🙏",
+        "💔",
+        "😢",
+        "🥹",
+        "😔",
+        "💕",
+        "❤️",
+        "🌹",
+      ];
+
+      let currentIndex = 0;
+      let forgiveLevel = 0;
+
+      function nextMessage() {
+        currentIndex = (currentIndex + 1) % sorryMessages.length;
+        const messageElement = document.getElementById("sorryMessage");
+        const emojiElement = document.querySelector(".emoji");
+
+        messageElement.style.animation = "none";
+        setTimeout(() => {
+          messageElement.textContent = sorryMessages[currentIndex];
+          messageElement.style.animation = "fadeIn 1s ease-in";
+        }, 10);
+
+        emojiElement.textContent =
+          emojis[Math.floor(Math.random() * emojis.length)];
+
+        // Increase forgive level
+        forgiveLevel = Math.min(100, forgiveLevel + 5);
+        updateMeter();
+
+        createHeart();
+      }
+
+      function updateMeter() {
+        const fill = document.getElementById("meterFill");
+        const percent = document.getElementById("meterPercent");
+        fill.style.width = forgiveLevel + "%";
+        percent.textContent = forgiveLevel + "%";
+      }
+
+      // Responsive intervals & heart limits
+      const isMobile = () => window.innerWidth <= 600;
+
+      let HEART_MAX = isMobile() ? 20 : 60;
+      let HEART_INTERVAL = isMobile() ? 1200 : 2000;
+      let MESSAGE_INTERVAL = isMobile() ? 6000 : 5000;
+
       let heartCount = 0;
-      const MAX_HEARTS = 60;
+      let heartIntervalId = null;
+      let messageIntervalId = null;
 
       function createHeart() {
-        if (heartCount >= MAX_HEARTS) return;
+        if (heartCount >= HEART_MAX) return;
         heartCount++;
 
         const heart = document.createElement("div");
         heart.className = "heart";
+        heart.textContent = "❤️";
 
-        // Kích thước trái tim tùy theo màn hình (dùng CSS variable)
-        const size = window.innerWidth < 600 ? 12 : 20;
-        heart.style.setProperty("--heart-size", size + "px");
+        // position safer for mobile using vw and clamp
+        const left = Math.random() * 100;
+        heart.style.left = Math.min(Math.max(left, 3), 97) + "%";
 
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration =
-          Math.random() * 3 + (window.innerWidth < 600 ? 3 : 3) + "s";
-        heart.style.animationDelay = Math.random() * 5 + "s";
+        // duration shorter on desktop, slightly longer on mobile for smoother feel
+        const baseDuration = isMobile() ? 8 : 6;
+        heart.style.animationDuration = Math.random() * 4 + baseDuration + "s";
+        heart.style.animationDelay = Math.random() * 1 + "s";
+
         document.body.appendChild(heart);
 
         setTimeout(() => {
           heart.remove();
-          heartCount--;
-        }, 8000);
+          heartCount = Math.max(0, heartCount - 1);
+        }, (parseFloat(heart.style.animationDuration) + 1) * 1000);
       }
 
-      // Thay đổi tần suất tạo trái tim dựa trên kích thước màn hình
-      let heartIntervalId;
-      function startHearts() {
-        const interval = window.innerWidth < 600 ? 600 : 300;
+      function startHeartInterval() {
         if (heartIntervalId) clearInterval(heartIntervalId);
-        heartIntervalId = setInterval(createHeart, interval);
+        HEART_INTERVAL = isMobile() ? 1200 : 2000;
+        HEART_MAX = isMobile() ? 20 : 60;
+        heartIntervalId = setInterval(() => createHeart(), HEART_INTERVAL);
       }
-      startHearts();
+
+      function startMessageInterval() {
+        if (messageIntervalId) clearInterval(messageIntervalId);
+        MESSAGE_INTERVAL = isMobile() ? 6000 : 5000;
+        messageIntervalId = setInterval(() => nextMessage(), MESSAGE_INTERVAL);
+      }
+
+      // initialize and respond to resize changes
+      startHeartInterval();
+      startMessageInterval();
+
       window.addEventListener("resize", () => {
-        startHearts();
+        // throttle quick resizes
+        clearTimeout(window._resizeTimeout);
+        window._resizeTimeout = setTimeout(() => {
+          startHeartInterval();
+          startMessageInterval();
+        }, 250);
       });
 
-      // Làm nút "Không tha thứ" chạy trốn (hỗ trợ cả touch)
-      function moveButton(e) {
-        // hỗ trợ touch event
-        const evt = e.touches ? e.touches[0] : e;
-        const btn = e.currentTarget || e.target;
-
-        const btnWidth = btn.offsetWidth || 120;
-        const btnHeight = btn.offsetHeight || 48;
-        const padding = 16;
-
-        const maxX = Math.max(window.innerWidth - btnWidth - padding, padding);
-        const maxY = Math.max(
-          window.innerHeight - btnHeight - padding,
-          padding
-        );
-
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
-
-        btn.style.position = "fixed";
-        btn.style.left = x + "px";
-        btn.style.top = y + "px";
-      }
-
-      // Gắn sự kiện touchstart cho mobile (an toàn nếu nút chưa tồn tại)
-      document.addEventListener("DOMContentLoaded", () => {
-        const noBtn = document.querySelector(".no-btn");
-        if (noBtn) {
-          // đảm bảo cả hover (desktop) và touch (mobile) làm việc
-          noBtn.addEventListener("touchstart", moveButton, { passive: true });
-          // dùng mouseenter thay vì onmouseover để ổn định trên desktop
-          noBtn.addEventListener("mouseenter", moveButton);
-        }
-      });
-
-      // Hiển thị popup khi tha thứ
+      // when user forgives, create celebration hearts but respect HEART_MAX
       function forgive() {
-        const popup = document.getElementById("popup");
-        popup.style.display = "flex";
-        createSparkles();
-      }
+        document.getElementById("overlay").classList.add("show");
+        document.getElementById("popup").classList.add("show");
 
-      // Đóng popup
-      function closePopup() {
-        const popup = document.getElementById("popup");
-        popup.style.display = "none";
-      }
-
-      // Tạo hiệu ứng lấp lánh
-      function createSparkles() {
-        for (let i = 0; i < 50; i++) {
-          setTimeout(() => {
-            const sparkle = document.createElement("div");
-            sparkle.className = "sparkle";
-            sparkle.style.left = Math.random() * window.innerWidth + "px";
-            sparkle.style.top = Math.random() * window.innerHeight + "px";
-            sparkle.style.animationDelay = Math.random() + "s";
-            document.body.appendChild(sparkle);
-
-            setTimeout(() => sparkle.remove(), 1000);
-          }, i * 50);
+        const burst = isMobile() ? 12 : 24;
+        for (let i = 0; i < burst; i++) {
+          setTimeout(() => createHeart(), i * 80);
         }
+
+        setTimeout(() => {
+          document.getElementById("overlay").classList.remove("show");
+          document.getElementById("popup").classList.remove("show");
+        }, 3000);
       }
 
-      // Hiển thị thông báo buồn
-      function showSad() {
-        alert("Hức hức... Anh buồn quá! 😭💔");
-      }
+      // Auto cycle messages
+      setInterval(() => {
+        nextMessage();
+      }, 5000);
     </script>
   </body>
 </html>
